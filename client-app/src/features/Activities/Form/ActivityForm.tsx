@@ -1,20 +1,22 @@
 import React, { useState, FormEvent } from 'react'
 import { Segment, Form, Button } from 'semantic-ui-react'
 import { IActivity } from '../../../app/models/activity'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 interface IProps {
     setEditMode: (editMode: boolean) => void;
     activity: IActivity | null;
     createActivityHandler: (activity: IActivity) => void;
     editActivityHandler: (activity: IActivity) => void;
+    submitting: boolean;
 }
 
 const ActivityForm: React.FC<IProps> = ({
     setEditMode,
     activity: initialActivity,
     createActivityHandler,
-    editActivityHandler }) => {
+    editActivityHandler,
+    submitting }) => {
 
     const initializeForm = () => {
         if (initialActivity)
@@ -86,7 +88,7 @@ const ActivityForm: React.FC<IProps> = ({
                     placeholder="City"
                     name="city"
                     value={activity.city} />
-                <Button floated="right" positive type="submit" content="Save" />
+                <Button loading={submitting} floated="right" positive type="submit" content="Save" />
                 <Button onClick={() => setEditMode(false)} floated="right" basic content="Cancel" />
             </Form>
         </Segment>
